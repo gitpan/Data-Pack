@@ -1,0 +1,27 @@
+This is the Perl distribution Data-Pack.
+
+INSTALLATION
+
+Data-Pack installation is straightforward. If your CPAN shell is
+set up, you should just be able to do
+
+    % cpan Data::Pack
+
+Download it, unpack it, then build it as per the usual:
+
+    % perl Makefile.PL
+    % make && make test
+
+Then install it:
+
+    % make install
+
+DOCUMENTATION
+
+Data-Pack documentation is available as in POD. So you can do:
+
+    % perldoc Data::Pack
+
+to read the documentation online with your favorite pager.
+
+Marcel Gruenauer
