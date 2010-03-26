@@ -1,19 +1,45 @@
-use inc::Module::Install;
-include 'Module::AutoInstall';
 
-name 'Data-Pack';
-all_from 'lib/Data/Pack.pm';
-perl_version '5.006';
+use strict;
+use warnings;
 
-requires 'Scalar::Util';
+ BEGIN { require 5.008; } 
 
-recommends 'Test::Pod';
-recommends 'Test::Pod::Coverage';
+use ExtUtils::MakeMaker 6.11;
 
-test_requires 'Test::More' => '0.70';
-test_requires 'Test::Differences';
-test_requires 'Test::Compile';
 
-auto_install;
-auto_include;
-WriteAll;
+
+my %WriteMakefileArgs = (
+                       'test' => {
+                                   'TESTS' => 't/*.t'
+                                 },
+                       'NAME' => 'Data::Pack',
+                       'DISTNAME' => 'Data-Pack',
+                       'CONFIGURE_REQUIRES' => {
+                                                 'ExtUtils::MakeMaker' => '6.11'
+                                               },
+                       'AUTHOR' => 'Marcel Gruenauer <marcel@cpan.org>',
+                       'BUILD_REQUIRES' => {},
+                       'ABSTRACT' => 'Pack data structures so only real content remains',
+                       'EXE_FILES' => [],
+                       'VERSION' => '1.100850',
+                       'PREREQ_PM' => {
+                                        'Test::More' => '0.88',
+                                        'Scalar::Util' => '0',
+                                        'Test::Differences' => '0',
+                                        'English' => '0',
+                                        'File::Find' => '0',
+                                        'File::Temp' => '0',
+                                        'Exporter' => '0',
+                                        'Carp' => '0'
+                                      },
+                       'LICENSE' => 'perl'
+                     );
+
+
+delete $WriteMakefileArgs{LICENSE}
+  unless eval { ExtUtils::MakeMaker->VERSION(6.31) };
+
+WriteMakefile(%WriteMakefileArgs);
+
+
+

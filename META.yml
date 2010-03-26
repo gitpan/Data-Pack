@@ -1,28 +1,32 @@
 ---
-abstract: 'pack data structures so only real content remains'
+abstract: 'Pack data structures so only real content remains'
 author:
-  - 'Marcel GrE<uuml>nauer, C<< <marcel@cpan.org> >>'
-build_requires:
-  Test::Compile: 0
-  Test::Differences: 0
-  Test::More: 0.70
-distribution_type: module
-generated_by: 'Module::Install version 0.76'
+  - 'Marcel Gruenauer <marcel@cpan.org>'
+build_requires: {}
+configure_requires:
+  ExtUtils::MakeMaker: 6.11
+generated_by: 'Dist::Zilla version 1.100711'
 license: perl
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.4.html
   version: 1.4
 name: Data-Pack
-no_index:
-  directory:
-    - inc
-    - t
-recommends:
-  Test::Pod: 0
-  Test::Pod::Coverage: 0
+provides:
+  Data::Pack:
+    file: lib/Data/Pack.pm
+    version: 1.100850
 requires:
+  Carp: 0
+  English: 0
+  Exporter: 0
+  File::Find: 0
+  File::Temp: 0
   Scalar::Util: 0
-  perl: 5.6.0
+  Test::Differences: 0
+  Test::More: 0.88
+  perl: 5.008
 resources:
-  license: http://dev.perl.org/licenses/
-version: 0.01
+  bugtracker: http://rt.cpan.org/Public/Dist/Display.html?Name=Data-Pack
+  homepage: http://search.cpan.org/dist/Data-Pack/
+  repository: http://github.com/hanekomu/Data-Pack
+version: 1.100850

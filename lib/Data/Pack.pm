@@ -1,20 +1,14 @@
-package Data::Pack;
-
+use 5.008;
 use strict;
 use warnings;
+
+package Data::Pack;
+our $VERSION = '1.100850';
+# ABSTRACT: Pack data structures so only real content remains
 use Scalar::Util 'reftype';
-
-
-our $VERSION = '0.01';
-
-use base 'Exporter';
-
-our %EXPORT_TAGS = (
-    util  => [ qw(pack_data has_content) ],
-);
-
+use Exporter qw(import);
+our %EXPORT_TAGS = (util => [qw(pack_data has_content)],);
 our @EXPORT_OK = @{ $EXPORT_TAGS{all} = [ map { @$_ } values %EXPORT_TAGS ] };
-
 
 sub has_content {
     my $data = shift;
@@ -25,11 +19,9 @@ sub has_content {
     die "has_content: unknown type [$type]\n";
 }
 
-
 sub pack_data {
     my $data = shift;
     return $data unless ref $data;
-
     my $type = reftype $data;
     if ($type eq 'HASH') {
         my $packed_hash = {};
@@ -40,24 +32,25 @@ sub pack_data {
         }
         bless $packed_hash, ref $data unless ref $data eq 'HASH';
         return $packed_hash;
-
     } elsif ($type eq 'ARRAY') {
         return [ grep { defined } map { pack_data($_) } @$data ];
     } else {
         die "pack_hash: unknown type [$type]\n";
     }
 }
-
-
-
 1;
 
 
 __END__
+=pod
 
 =head1 NAME
 
-Data::Pack - pack data structures so only real content remains
+Data::Pack - Pack data structures so only real content remains
+
+=head1 VERSION
+
+version 1.100850
 
 =head1 SYNOPSIS
 
@@ -105,23 +98,21 @@ if you use the C<:all> tag.
 
 =head1 FUNCTIONS
 
-=over 4
-
-=item pack_data
+=head2 pack_data
 
 This function takes a possibly blessed hash or array reference and traverses
 it, returning a copy that has no undefined or otherwise empty pieces. That is,
 key/value pairs where the value is undefined - or recursively deemed
-contentless - are eliminated from the copy, as are undefined or contentless
-elements from arrays. "Deemed contentless" is done with C<has_content()>, so
-for example a hash key/value pair whose value is a hash of arrays or the like,
-but whose leaves are all undefined or empty, is omitted. See the Synopsis for
-an example.
+to be without content - are eliminated from the copy, as are undefined or
+recursively content-free elements from arrays. Checking for content is done
+with C<has_content()>, so for example a hash key/value pair whose value is a
+hash of arrays or the like, but whose leaves are all undefined or empty, is
+omitted. See the Synopsis for an example.
 
-=item has_content
+=head2 has_content
 
-This is really just a convenience function used by C<data_pack()>, but it is
-still exportable.
+This is really just a convenience function used by C<data_pack()>, but can
+still be exported.
 
 Given a scalar, it returns whether this is a defined value.
 
@@ -133,35 +124,39 @@ any key/value pairs.
 
 Given any other type of reference, it will die.
 
-=back
+=head1 INSTALLATION
+
+See perlmodinstall for information and options on installing Perl modules.
 
 =head1 BUGS AND LIMITATIONS
 
 No bugs have been reported.
 
 Please report any bugs or feature requests through the web interface at
-L<http://rt.cpan.org>.
-
-=head1 INSTALLATION
-
-See perlmodinstall for information and options on installing Perl modules.
+L<http://rt.cpan.org/Public/Dist/Display.html?Name=Data-Pack>.
 
 =head1 AVAILABILITY
 
 The latest version of this module is available from the Comprehensive Perl
-Archive Network (CPAN). Visit <http://www.perl.com/CPAN/> to find a CPAN
-site near you. Or see <http://www.perl.com/CPAN/authors/id/M/MA/MARCEL/>.
+Archive Network (CPAN). Visit L<http://www.perl.com/CPAN/> to find a CPAN
+site near you, or see
+L<http://search.cpan.org/dist/Data-Pack/>.
 
-=head1 AUTHORS
+The development version lives at
+L<http://github.com/hanekomu/Data-Pack/>.
+Instead of sending patches, please fork this project using the standard git
+and github infrastructure.
 
-Marcel GrE<uuml>nauer, C<< <marcel@cpan.org> >>
+=head1 AUTHOR
+
+  Marcel Gruenauer <marcel@cpan.org>
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright 2008 by Marcel GrE<uuml>nauer
+This software is copyright (c) 2008 by Marcel Gruenauer.
 
-This library is free software; you can redistribute it and/or modify
-it under the same terms as Perl itself.
+This is free software; you can redistribute it and/or modify it under
+the same terms as the Perl 5 programming language system itself.
 
 =cut
 
