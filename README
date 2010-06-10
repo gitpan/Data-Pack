@@ -2,7 +2,7 @@ NAME
     Data::Pack - Pack data structures so only real content remains
 
 VERSION
-    version 1.101610
+    version 1.101611
 
 SYNOPSIS
         use Data::Pack ':all';

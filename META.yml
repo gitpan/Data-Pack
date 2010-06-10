@@ -21,7 +21,7 @@ name: Data-Pack
 provides:
   Data::Pack:
     file: lib/Data/Pack.pm
-    version: 1.101610
+    version: 1.101611
 requires:
   Exporter: 0
   Scalar::Util: 0
@@ -30,4 +30,4 @@ resources:
   bugtracker: http://rt.cpan.org/Public/Dist/Display.html?Name=Data-Pack
   homepage: http://search.cpan.org/dist/Data-Pack/
   repository: http://github.com/hanekomu/Data-Pack
-version: 1.101610
+version: 1.101611

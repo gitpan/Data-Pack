@@ -4,7 +4,7 @@ use warnings;
 
 package Data::Pack;
 BEGIN {
-  $Data::Pack::VERSION = '1.101610';
+  $Data::Pack::VERSION = '1.101611';
 }
 
 # ABSTRACT: Pack data structures so only real content remains
@@ -36,7 +36,8 @@ sub pack_data {
         bless $packed_hash, ref $data unless ref $data eq 'HASH';
         return wantarray ? %$packed_hash : $packed_hash;
     } elsif ($type eq 'ARRAY') {
-        my $packed_array = [ grep { defined } map { pack_data($_) } @$data ];
+        my $packed_array =
+          [ grep { defined } map { scalar(pack_data($_)) } @$data ];
         return wantarray ? @$packed_array : $packed_array;
     } else {
         die "pack_hash: unknown type [$type]\n";
@@ -51,7 +52,6 @@ sub pack_hash {
 sub pack_array {
     pack_data(\@_);
 }
-
 1;
 
 
@@ -64,7 +64,7 @@ Data::Pack - Pack data structures so only real content remains
 
 =head1 VERSION
 
-version 1.101610
+version 1.101611
 
 =head1 SYNOPSIS
 

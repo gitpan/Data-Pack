@@ -26,11 +26,13 @@ my $h = {
             g4b => undef,
         },
     },
+    h => [ { a => 23 }, { a => 42 } ],
 };
 my $hp = {
     a => 1,
     b => [ 2 .. 4, 6 .. 8 ],
     f => (bless { f2 => 'f2', }, 'Foo'),
+    h => [ { a => 23 }, { a => 42 } ],
 };
 eq_or_diff(scalar(pack_data($h)), $hp, 'pack_data(hashref), scalar context');
 my %h2 = pack_hash(%$h);

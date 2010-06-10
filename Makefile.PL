@@ -30,7 +30,7 @@ my %WriteMakefileArgs = (
     'Exporter' => '0',
     'Scalar::Util' => '0'
   },
-  'VERSION' => '1.101610',
+  'VERSION' => '1.101611',
   'test' => {
     'TESTS' => 't/*.t'
   }

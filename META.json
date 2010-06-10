@@ -40,7 +40,7 @@
    "provides" : {
       "Data::Pack" : {
          "file" : "lib/Data/Pack.pm",
-         "version" : "1.101610"
+         "version" : "1.101611"
       }
    },
    "release_status" : "stable",
@@ -54,6 +54,6 @@
          "url" : "http://github.com/hanekomu/Data-Pack"
       }
    },
-   "version" : "1.101610"
+   "version" : "1.101611"
 }
 
