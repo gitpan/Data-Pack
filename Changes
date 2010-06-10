@@ -1,5 +1,10 @@
 Revision history for Perl extension Data-Pack
 
+1.101610  2010-06-10 12:56:31 Europe/Vienna
+    - add tests for overlaid hashes
+    - pack_data() respects wantarray
+    - added pack_hash() and pack_array()
+
 1.100850  2010-03-26 10:47:31 Europe/Vienna
     - converted the distribution to Dist::Zilla-style
 

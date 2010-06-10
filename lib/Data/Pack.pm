@@ -3,11 +3,14 @@ use strict;
 use warnings;
 
 package Data::Pack;
-our $VERSION = '1.100850';
+BEGIN {
+  $Data::Pack::VERSION = '1.101610';
+}
+
 # ABSTRACT: Pack data structures so only real content remains
 use Scalar::Util 'reftype';
 use Exporter qw(import);
-our %EXPORT_TAGS = (util => [qw(pack_data has_content)],);
+our %EXPORT_TAGS = (util => [qw(pack_data pack_hash pack_array has_content)],);
 our @EXPORT_OK = @{ $EXPORT_TAGS{all} = [ map { @$_ } values %EXPORT_TAGS ] };
 
 sub has_content {
@@ -31,13 +34,24 @@ sub pack_data {
             $packed_hash->{$key} = $packed_value;
         }
         bless $packed_hash, ref $data unless ref $data eq 'HASH';
-        return $packed_hash;
+        return wantarray ? %$packed_hash : $packed_hash;
     } elsif ($type eq 'ARRAY') {
-        return [ grep { defined } map { pack_data($_) } @$data ];
+        my $packed_array = [ grep { defined } map { pack_data($_) } @$data ];
+        return wantarray ? @$packed_array : $packed_array;
     } else {
         die "pack_hash: unknown type [$type]\n";
     }
 }
+
+sub pack_hash {
+    my %h = @_;
+    pack_data(\%h);
+}
+
+sub pack_array {
+    pack_data(\@_);
+}
+
 1;
 
 
@@ -50,7 +64,7 @@ Data::Pack - Pack data structures so only real content remains
 
 =head1 VERSION
 
-version 1.100850
+version 1.101610
 
 =head1 SYNOPSIS
 
@@ -78,6 +92,7 @@ version 1.100850
     };
 
     my $p = pack_data($h);
+    my %h2 = pack_hash(%$h);
 
 The result is
 
@@ -109,6 +124,21 @@ with C<has_content()>, so for example a hash key/value pair whose value is a
 hash of arrays or the like, but whose leaves are all undefined or empty, is
 omitted. See the Synopsis for an example.
 
+In list context, hashes and arrays are returned as such. In scalar context,
+   references are returned.
+
+=head2 pack_hash
+
+This convenience function can be passed a hash instead of a reference. It
+returns the packed hash in list context, or a reference to it in scalar
+context.
+
+=head2 pack_array
+
+This convenience function can be passed an array instead of a reference. It
+returns the packed array in list context, or a reference to it in scalar
+context.
+
 =head2 has_content
 
 This is really just a convenience function used by C<data_pack()>, but can
@@ -133,7 +163,7 @@ See perlmodinstall for information and options on installing Perl modules.
 No bugs have been reported.
 
 Please report any bugs or feature requests through the web interface at
-L<http://rt.cpan.org/Public/Dist/Display.html?Name=Data-Pack>.
+L<http://rt.cpan.org>.
 
 =head1 AVAILABILITY
 
